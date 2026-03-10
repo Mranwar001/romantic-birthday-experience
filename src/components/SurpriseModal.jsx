@@ -5,7 +5,6 @@ const SurpriseModal = ({ delay = 10000 }) => {
   const [step, setStep] = useState(1); // 1: Question, 2: Choice, 3: Message, 4: Success
   const [choice, setChoice] = useState('');
   const [message, setMessage] = useState('');
-
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
@@ -21,24 +20,26 @@ const SurpriseModal = ({ delay = 10000 }) => {
   const handleSend = async () => {
     setIsSending(true);
     try {
-      const response = await fetch("https://formspree.io/f/mqaeobon", {
+      const response = await fetch("https:                             
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: "anwarcscience@gmail.com",
+          _subject: "A Special Birthday Message!",
           message: `Choice: ${choice}\n\nMessage: ${message}`
         })
       });
+      
       if (response.ok) {
         setStep(4);
       } else {
-        alert("Oops! Something went wrong. Opening email instead...");
-        const subject = encodeURIComponent("A Special Birthday Message for You! ❤️");
-        const body = encodeURIComponent(`Choice: ${choice}\n\nMessage: ${message}`);
-        window.location.href = `mailto:anwarcscience@gmail.com?subject=${subject}&body=${body}`;
+        throw new Error('Formspree error');
       }
     } catch (error) {
       console.error("Error sending message:", error);
+      alert("Oops! Something went wrong. Opening email instead...");
+      const subject = encodeURIComponent("A Special Birthday Message! ❤️");
+      const body = encodeURIComponent(`Choice: ${choice}\n\nMessage: ${message}`);
+      window.location.href = `mailto:anwarcscience@gmail.com?subject=${subject}&body=${body}`;
     } finally {
       setIsSending(false);
     }
@@ -52,20 +53,13 @@ const SurpriseModal = ({ delay = 10000 }) => {
         {step === 1 && (
           <>
             <h2 className="romantic-text glow-text display-4 mb-4">A Special Question ❤️</h2>
-            <p className="lead mb-5 dancing-script" style={{ fontSize: '1.8rem' }}>
-              "Will you always be mine? ❤️"
-            </p>
+            <p className="lead mb-5 dancing-script" style={{ fontSize: '1.8rem' }}> "Will you always be mine? ❤️" </p>
             <div className="d-flex flex-column flex-sm-row justify-content-center gap-3">
-              <button onClick={() => setStep(2)} className="btn-romantic btn-pink animate__animated animate__pulse animate__infinite">
-                Yes 💖
-              </button>
-              <button onClick={() => setStep(2)} className="btn-romantic btn-forever">
-                Forever 💞
-              </button>
+              <button onClick={() => setStep(2)} className="btn-romantic btn-pink animate__animated animate__pulse animate__infinite"> Yes 💖 </button>
+              <button onClick={() => setStep(2)} className="btn-romantic btn-forever"> Forever 💞 </button>
             </div>
           </>
         )}
-
         {step === 2 && (
           <>
             <h2 className="romantic-text glow-text display-5 mb-4">Pick Our Next Adventure ✈️</h2>
@@ -76,35 +70,24 @@ const SurpriseModal = ({ delay = 10000 }) => {
             </div>
           </>
         )}
-
         {step === 3 && (
           <>
             <h2 className="romantic-text glow-text display-5 mb-4">Leave a Little Message 💌</h2>
-            <textarea
-              className="form-control romantic-input mb-4"
-              rows="4"
-              placeholder="Write something sweet..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            ></textarea>
+            <textarea className="form-control romantic-input mb-4" rows="4" placeholder="Write something sweet..." value={message} onChange={(e) => setMessage(e.target.value)} ></textarea>
             <button onClick={handleSend} className="btn-romantic btn-pink w-100" disabled={isSending}>
               {isSending ? 'Sending with Love...' : 'Send with Love ❤️'}
             </button>
           </>
         )}
-
         {step === 4 && (
           <div className="animate__animated animate__heartBeat">
             <i className="fa-solid fa-circle-check text-success display-1 mb-4"></i>
             <h2 className="romantic-text glow-text display-4">Sent with Love!</h2>
-            <p className="lead dancing-script mt-3" style={{ fontSize: '1.5rem' }}>
-              "Your message is on its way to my heart."
-            </p>
+            <p className="lead dancing-script mt-3" style={{ fontSize: '1.5rem' }}> "Your message is on its way to my heart." </p>
             <button onClick={() => setShow(false)} className="btn-romantic btn-pink mt-4">Close</button>
           </div>
         )}
       </div>
-
       <style jsx>{`
         .modal-backdrop-custom {
           position: fixed;
@@ -118,7 +101,7 @@ const SurpriseModal = ({ delay = 10000 }) => {
         }
         .surprise-modal {
           max-width: 500px;
-          border: 2px solid #ff4d6d;
+          border: 2px solid         
           background: rgba(26, 10, 10, 0.95);
           color: white;
         }
@@ -129,8 +112,14 @@ const SurpriseModal = ({ delay = 10000 }) => {
           font-weight: 600;
           transition: all 0.3s ease;
         }
-        .btn-pink { background: #ff4d6d; color: white; }
-        .btn-forever { background: #bb96ff; color: white; }
+        .btn-pink {
+          background:         
+          color: white;
+        }
+        .btn-forever {
+          background:         
+          color: white;
+        }
         .btn-choice {
           padding: 15px;
           background: rgba(255, 77, 109, 0.1);
@@ -141,19 +130,19 @@ const SurpriseModal = ({ delay = 10000 }) => {
           font-family: 'Poppins', sans-serif;
         }
         .btn-choice:hover {
-          background: #ff4d6d;
+          background:         
           transform: translateY(-3px);
         }
         .romantic-input {
           background: rgba(255, 255, 255, 0.05);
-          border: 1px solid #ff4d6d;
+          border: 1px solid         
           color: white;
           border-radius: 15px;
         }
         .romantic-input:focus {
           background: rgba(255, 255, 255, 0.1);
           color: white;
-          border-color: #ff85a2;
+          border-color:         
           box-shadow: 0 0 10px rgba(255, 77, 109, 0.5);
         }
       `}</style>
