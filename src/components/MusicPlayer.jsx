@@ -17,7 +17,7 @@ const MusicPlayer = () => {
     <div className="music-player-floating glass-effect p-3 soft-shadow animate__animated animate__fadeInRight">
       <audio
         ref={audioRef}
-        src="https://www.chosic.com/wp-content/uploads/2021/04/Main-Phir-Bhi-Tumko-Chahunga.mp3"
+        src="https://archive.org/download/monsterkill_201805/Phir%20Bhi%20Tumko%20Chaahunga%20-%20Full%20Video%20_20Half%20Girlfriend_%20Arjun%20K%2CShraddha%20K%20_%20Arijit%20Singh_%20Mithoon.mp3"
         loop
       />
 

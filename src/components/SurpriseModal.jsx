@@ -6,6 +6,8 @@ const SurpriseModal = ({ delay = 10000 }) => {
   const [choice, setChoice] = useState('');
   const [message, setMessage] = useState('');
 
+  const [isSending, setIsSending] = useState(false);
+
   useEffect(() => {
     const timer = setTimeout(() => setShow(true), delay);
     return () => clearTimeout(timer);
@@ -16,11 +18,30 @@ const SurpriseModal = ({ delay = 10000 }) => {
     setStep(3);
   };
 
-  const handleSend = () => {
-    const subject = encodeURIComponent("A Special Birthday Message for You! ❤️");
-    const body = encodeURIComponent(`Choice: ${choice}\n\nMessage: ${message}`);
-    window.location.href = `mailto:anwarcscience@gmail.com?subject=${subject}&body=${body}`;
-    setStep(4);
+  const handleSend = async () => {
+    setIsSending(true);
+    try {
+      const response = await fetch("https://formspree.io/f/mqaeobon", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: "anwarcscience@gmail.com",
+          message: `Choice: ${choice}\n\nMessage: ${message}`
+        })
+      });
+      if (response.ok) {
+        setStep(4);
+      } else {
+        alert("Oops! Something went wrong. Opening email instead...");
+        const subject = encodeURIComponent("A Special Birthday Message for You! ❤️");
+        const body = encodeURIComponent(`Choice: ${choice}\n\nMessage: ${message}`);
+        window.location.href = `mailto:anwarcscience@gmail.com?subject=${subject}&body=${body}`;
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   if (!show) return null;
@@ -66,8 +87,8 @@ const SurpriseModal = ({ delay = 10000 }) => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             ></textarea>
-            <button onClick={handleSend} className="btn-romantic btn-pink w-100">
-              Send with Love ❤️
+            <button onClick={handleSend} className="btn-romantic btn-pink w-100" disabled={isSending}>
+              {isSending ? 'Sending with Love...' : 'Send with Love ❤️'}
             </button>
           </>
         )}
